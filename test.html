@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,9 +24,9 @@
                     additional: "[smallpdf（PDF高质量转换,一般转换不推荐，pdf转word）](https://smallpdf.com/cn/pdf-to-word)"
                 }
             ];
-            search.addEventListener("keyup", (event)=>{
+            search.addEventListener("keyup", (event) => {
                 // 回车搜索
-                if(event.keyCode === 13) {
+                if (event.keyCode === 13) {
                     const keyword = search.value;
                     const searchData = searchHandler(keyword);
                     result.innerText = searchData;
@@ -34,14 +35,16 @@
             function searchHandler(keyword) {
                 // scoreSortArr与data同序
                 const scopeForObjArrContainer = []
-                overlapMatchingDegreeForObjectArray(keyword, data, (item)=>[item.title, item.describe, item.additional],{sort = "desc",onlyHasScope =false,scopeForObjArrContainer});
-                return data.map((item,index)=>`${item.title}（${scopeForObjArrContainer[index]}）`);
+                overlapMatchingDegreeForObjectArray(keyword, data, (item) => [item.title, item.describe, item.additional], { sort: "desc", onlyHasScope: false, scopeForObjArrContainer });
+                return data.map((item, index) => `${item.title}（${scopeForObjArrContainer[index]}）`);
             }
         }
     </script>
 </head>
+
 <body>
     <input type="text" id="search" placeholder="Search..." onkeyup="addEventListener" />
     <div id="result"></div>
 </body>
+
 </html>
