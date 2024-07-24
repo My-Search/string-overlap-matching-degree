@@ -47,7 +47,6 @@ function overlapMatchingDegree(keyword, topicWeighs = {}, sort = "desc") {
         }
         topicWeighs = _temp;
     }
-    debugger
     let topicList = Object.keys(topicWeighs)
     // topic map 得分
     const topicScores = topicList.map(topic => {
