@@ -3,11 +3,28 @@
  * @author: zhuangjie
  * @date: 2024-07-23
  */
-function overlapMatchingDegreeForObjectArray(keyword = "", objArr = [], fun = (obj) => [], sort = "desc") {
+function overlapMatchingDegreeForObjectArray(keyword = "", objArr = [], fun = (obj) => [], {sort = "desc",onlyHasScope =false,scopeForObjArrContainer} = {}) {
     const scopeForData = objArr.map(item => overlapMatchingDegree(keyword, fun(item), sort));
+    // scope与 objArr 同步排序
     sortAndSync(scopeForData, objArr)
-    return scopeForData;
+    if(Array.isArray(scopeForObjArrContainer)) {
+        // 说明需要分数，倒给
+        scopeForObjArrContainer.push(...scopeForData)
+    }
+    return onlyHasScope ? filterMismatchItem(scopeForData,objArr) : objArr;
 }
+
+// 根据scopeForData得到新数组objArr
+function filterMismatchItem(scopeForData,objArr) {
+    const result = []
+    for(let [scope,index] of scopeForData.entries()) {
+        if(scope != 0) {
+            result.push(objArr[index])
+        }
+    }
+    return result
+}
+
 /**
  * 计算匹配度外层封装工具
  * @param {string} keyword - 匹配字符串1
@@ -30,6 +47,7 @@ function overlapMatchingDegree(keyword, topicWeighs = {}, sort = "desc") {
         }
         topicWeighs = _temp;
     }
+    debugger
     let topicList = Object.keys(topicWeighs)
     // topic map 得分
     const topicScores = topicList.map(topic => {
