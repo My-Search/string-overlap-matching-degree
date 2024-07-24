@@ -3,9 +3,8 @@
  * @author: zhuangjie
  * @date: 2024-07-23
  */
-
-function overlapMatchingDegreeForObjectArray(keyword = "", objArr = [], fun = (obj) => []) {
-    const scopeForData = objArr.map(item => overlapMatchingDegree(keyword, fun(item)));
+function overlapMatchingDegreeForObjectArray(keyword = "", objArr = [], fun = (obj) => [], sort = "desc") {
+    const scopeForData = objArr.map(item => overlapMatchingDegree(keyword, fun(item), sort));
     sortAndSync(scopeForData, objArr)
     return scopeForData;
 }
