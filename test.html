@@ -33,8 +33,9 @@
             });
             function searchHandler(keyword) {
                 // scoreSortArr与data同序
-                const scoreSortArr = overlapMatchingDegreeForObjectArray(keyword, data, (item)=>[item.title, item.describe, item.additional]);
-                return data.map((item,index)=>`${item.title}（${scoreSortArr[index]}）`);
+                const scopeForObjArrContainer = []
+                overlapMatchingDegreeForObjectArray(keyword, data, (item)=>[item.title, item.describe, item.additional],{sort = "desc",onlyHasScope =false,scopeForObjArrContainer});
+                return data.map((item,index)=>`${item.title}（${scopeForObjArrContainer[index]}）`);
             }
         }
     </script>
