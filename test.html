@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>overlap-matching-degree使用示例</title>
+    <script src="./overlap-matching-degree.js"></script>
+    <script>
+        window.onload = function () {
+            var search = document.getElementById("search");
+            var result = document.getElementById("result");
+            const data = [
+                {
+                    title: "zTasker",
+                    describe: "定时任务工具，比如每天几点让电脑睡眠关机、执行bat脚本等操作，支持中文界面",
+                    resource: "http://www.everauto.net/cn/",
+                    additional: ""
+                },
+                {
+                    title: "sumatrapdf",
+                    describe: "小而好用的pdf阅读器",
+                    resource: "https://www.sumatrapdfreader.org/downloadafter",
+                    additional: "[smallpdf（PDF高质量转换,一般转换不推荐，pdf转word）](https://smallpdf.com/cn/pdf-to-word)"
+                }
+            ];
+            search.addEventListener("keyup", (event)=>{
+                // 回车搜索
+                if(event.keyCode === 13) {
+                    const keyword = search.value;
+                    const searchData = searchHandler(keyword);
+                    result.innerText = searchData;
+                }
+            });
+            function searchHandler(keyword) {
+                // scoreSortArr与data同序
+                const scoreSortArr = overlapMatchingDegreeForObjectArray(keyword, data, (item)=>[item.title, item.describe, item.additional]);
+                return data.map((item,index)=>`${item.title}（${scoreSortArr[index]}）`);
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="search" placeholder="Search..." onkeyup="addEventListener" />
+    <div id="result"></div>
+</body>
+</html>
