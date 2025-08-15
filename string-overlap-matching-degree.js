@@ -23,10 +23,9 @@ function overlapMatchingDegreeForObjectArray(keyword = "", objArr = [], fun = (o
  */
 function overlapMatchingDegree(keyword, topicWeighs = {}, sort = "desc") {
     if (Array.isArray(topicWeighs)) {
-        const weightMultiplier = sort === "asc" ? 1 : -1;
-        topicWeighs = Object.fromEntries(topicWeighs.map((topic, index) => [topic, (index + 1) * weightMultiplier]));
+        const weightMultiplier = sort === "desc" ? 1 : -1;
+        topicWeighs = Object.fromEntries(topicWeighs.reverse().map((topic, index) => [topic, (index + 1) * weightMultiplier]));
     }
-    
     return Object.keys(topicWeighs).reduce((totalScore, topic) => {
         const currentScore = topicWeighs[topic];
         const overlapLengthBlocksMap = findOverlapBlocks(keyword, topic);
